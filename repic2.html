@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>再改进图片浏览</title>
+<link href="pic.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <h1>Snapshots</h1>
+    <ul id="picList">
+        <li><a href="image1.jpeg" title="盛世美颜" ><img src="image1.jpeg"> </a></li>
+        <li><a href="image4.jpeg" title="帅哥" ><img src="image4.jpeg"> </a></li>
+        <li><a href="image2.jpeg" title="绝代美颜"><img src="image2.jpeg"> </a></li>
+        <li><a href="image3.jpeg" title="朦胧帅"><img src="image3.jpeg"> </a></li>
+        <li><a href="image5.jpeg" title="酷" ><img src="image5.jpeg" > </a></li>
+        <li><a href="image6.jpeg" title="傲娇" ><img src="image6.jpeg"> </a></li>
+  <!--去掉这里的函数调用，将html代码与js分离-->
+    </ul>
+    <p id="description">Choose a picture.</p>
+   <img id="imgPlace" src="封面.jpeg" alt="my image gallery">
+    <script type="text/javascript">
+    
+	  function showPic(thePic){
+		  //实现图片切换
+		  var source=thePic.getAttribute("href");
+		  imgPlace.setAttribute("src",source);
+		 
+		  //实现文本切换
+	      var title=thePic.getAttribute("title");
+		  var description=document.getElementById("description");
+		  //alert(description.childNodes[0].nodeValue);
+		  //childNodes[0]==firstChild 正如 childNodes[node.childNodes.length-1]=lastChild
+		  description.firstChild.nodeValue=title;
+	  }
+	 
+	 window.onload=function(){
+	   var imgPlace=document.getElementById("imgPlace");
+       var orginPic=imgPlace.getAttribute("src");
+	 
+	  // 点击页面空白处时 
+       document.onclick=function(){
+      // 显示导航页
+	    //  var orginPic=imgPlace.getAttribute("src");
+	     //  为什么这里的originPic必须是全局变量，在这里设置成局部变量就不能正确跳转。
+	  imgPlace.setAttribute("src",orginPic);
+	 }
+	  var picList=document.getElementById("picList");
+	  var li=picList.getElementsByTagName("a");
+	  for(i=0;i<li.length;i++){
+		li[i].onclick=function(event){
+			//防止冒泡
+	      event=event||window.event;
+              if(event.stopPropagation){
+                      event.stopPropagation();
+                   }
+                    else{
+                        event.cancelBubble=true;
+                         }
+		  //实现图片切换
+		  showPic(this);
+		  return false;
+		}
+		  }
+		  }
+    </script>
+</body>
+</html>
+
